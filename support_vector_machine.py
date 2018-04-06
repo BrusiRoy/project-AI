@@ -14,7 +14,7 @@ target = digits.target
 X_train, X_test, y_train, y_test = train_test_split(data, target, test_size=0.5, stratify=target, random_state=0)
 
 
-def support_vector_machine(name, X_train, X_test, y_train, y_test):
+def support_vector_machine(dataset_name, X_train, X_test, y_train, y_test):
     # Create a classifier: a support vector classifier
     classifier = svm.SVC(gamma=0.001)
 
@@ -22,14 +22,13 @@ def support_vector_machine(name, X_train, X_test, y_train, y_test):
     # Fitting
     classifier.fit(X_train, y_train)
 
-    # Now predict the value of the digit on the second half:
     expected = y_test
     predicted = classifier.predict(X_test)
 
     total_time = time.time() - start_time
 
-    with open(f"results/support_vector_machine/svm-{name}-{start_time}.txt", 'a') as f:
-        f.write(f'Result for the SVM on the {name} dataset with the following specification:\n')
+    with open(f"results/support_vector_machine/svm-{dataset_name}-{start_time}.txt", 'a') as f:
+        f.write(f'Result for the SVM on the {dataset_name} dataset with the following specification:\n')
         f.write(str(classifier))
         f.write('Classification Report:\n')
         f.write(str(metrics.classification_report(expected, predicted)))
