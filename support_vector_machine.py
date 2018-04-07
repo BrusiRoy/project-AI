@@ -37,4 +37,4 @@ def support_vector_machine(dataset_name, X_train, X_test, y_train, y_test):
         f.write(f'\nExecution time: {total_time}')
 
 
-support_vector_machine('digits', X_train, X_test, y_train, y_test)
+# support_vector_machine('digits', X_train, X_test, y_train, y_test)

@@ -14,7 +14,7 @@ iris = datasets.load_iris()
 df = pd.DataFrame(iris.data, columns=iris.feature_names)
 
 # Create the train and test sets
-X_train, X_test, y_train, y_test = train_test_split(df[iris.feature_names], iris.target, test_size=0.5, stratify=iris.target, random_state=0)
+X_train, X_test, y_train, y_test = train_test_split(df[iris.feature_names], iris.target, test_size=0.1, stratify=iris.target, random_state=0)
 
 
 def random_forest(dataset_name, X_train, X_test, y_train, y_test):
@@ -39,4 +39,4 @@ def random_forest(dataset_name, X_train, X_test, y_train, y_test):
         f.write(f'\nExecution time: {total_time}')
 
 
-random_forest('iris', X_train, X_test, y_train, y_test)
+# random_forest('iris', X_train, X_test, y_train, y_test)
