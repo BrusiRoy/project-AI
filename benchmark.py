@@ -52,18 +52,20 @@ def MLP_benchmark(classifier, dataset_name, X_train, X_test, y_train, y_test):
         f.write(f'\nExecution time: {total_time}')
 
 
+# XXX: This is done in parallel
+#rf = RandomForestClassifier(n_estimators=100, oob_score=True, random_state=0, n_jobs=-1)
+#benchmark(rf, 'MNIST', X_train, X_test, y_train, y_test)
 
-rf = RandomForestClassifier(n_estimators=100, oob_score=True, random_state=0)
-benchmark(rf, 'MNIST', X_train, X_test, y_train, y_test)
-
-#svm = svm.SVC(gamma=0.001)
+#svm = svm.SVC(gamma=0.001, random_state=0)
 #benchmark(svm, 'MNIST', X_train, X_test, y_train, y_test)
 
 #gb = GradientBoostingClassifier(n_estimators=10, learning_rate=1.0, max_depth=1, random_state=0)
 #benchmark(gb, 'MNIST', X_train, X_test, y_train, y_test)
 
+"""
 mlp = MLPClassifier(hidden_layer_sizes=(50,), max_iter=10, alpha=1e-4,
                     solver='sgd', verbose=10, tol=1e-4, random_state=1,
                     learning_rate_init=.1)
+"""
 
 #MLP_benchmark(mlp, 'MNIST', X_train, X_test, y_train, y_test)
