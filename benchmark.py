@@ -4,7 +4,7 @@ import pandas as pd
 
 from sklearn import datasets, svm, metrics
 from sklearn.preprocessing import LabelEncoder
-from utils import get_MNIST, get_bank, get_bank_full
+from utils import get_MNIST, get_bank, get_bank_full, get_bank_additional, get_bank_additional_full
 from sklearn import datasets, metrics
 from support_vector_machine import support_vector_machine
 from random_forest import random_forest
@@ -16,7 +16,8 @@ from sklearn.neural_network import MLPClassifier
 #X_train, X_test, y_train, y_test = train_test_split(data / 255., target, train_size=60000, stratify=target, random_state=0)
 
 
-data, target = get_bank_full()
+#name, data, target = get_bank_full()
+dataset_name, data, target = get_bank_additional_full()
 
 
 X_train, X_test, y_train, y_test = train_test_split(data, target, test_size=0.1, stratify=target, random_state=0)
@@ -76,4 +77,4 @@ mlp = MLPClassifier(hidden_layer_sizes=(50,), max_iter=10, alpha=1e-4,
                     solver='sgd', verbose=10, tol=1e-4, random_state=1,
                     learning_rate_init=.1)
 
-benchmark(mlp, 'Bank-full', X_train, X_test, y_train, y_test)
+benchmark(mlp, dataset_name, X_train, X_test, y_train, y_test)
