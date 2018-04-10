@@ -6,8 +6,6 @@ from sklearn import datasets, svm, metrics
 from sklearn.preprocessing import LabelEncoder
 from utils import get_MNIST, get_bank, get_bank_full, get_bank_additional, get_bank_additional_full
 from sklearn import datasets, metrics
-from support_vector_machine import support_vector_machine
-from random_forest import random_forest
 from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
 from sklearn.neural_network import MLPClassifier
 
