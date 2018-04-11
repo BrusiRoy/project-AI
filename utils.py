@@ -4,12 +4,16 @@ from sklearn.preprocessing import LabelEncoder
 from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
 from sklearn.neural_network import MLPClassifier
 from sklearn import datasets, svm, metrics
+import sys
+sys.path.append("C:\\Users\\brusi\\Desktop\\xgboost\\python-package")
+from xgboost import XGBClassifier
+from sklearn.metrics import accuracy_score
 
 
 def get_MNIST():
     """Returns a (name, data, target) tuple of the MNIST dataset (70 000 items)"""
     mnist = fetch_mldata('MNIST original', data_home='./data/')
-    return ('MNIST', mnist.data / 255., mnist.target)
+    return ('MNIST', pd.DataFrame(mnist.data / 255.), pd.DataFrame(mnist.target))
 
 
 def get_bank():
@@ -123,3 +127,8 @@ def create_MLP():
     return MLPClassifier(hidden_layer_sizes=(50,), max_iter=10, alpha=1e-4,
                         solver='sgd', verbose=10, tol=1e-4, random_state=1,
                         learning_rate_init=.1)
+
+
+def create_XGB():
+    """Returns a XGB classifier"""
+    return XGBClassifier()
