@@ -9,17 +9,18 @@ from utils import create_GB, create_MLP, create_RF, create_SVM, create_XGB
 from sklearn import datasets, metrics
 from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
 from sklearn.neural_network import MLPClassifier
-
-import sys
-sys.path.append("C:\\Users\\brusi\\Desktop\\xgboost\\python-package")
-from xgboost import XGBClassifier
 from sklearn.metrics import accuracy_score
+
+result_df = pd.DataFrame(columns=['dataset', 'algo', 'accuracy', 'time'])
 
 
 def benchmark(classifier, dataset_name, X_train, X_test, y_train, y_test):
     """Benchmark the classifier"""
+    global result_df
 
     start_time = time.time()
+    total_time = 0
+    accuracy = 0
 
     if classifier.__class__.__name__ == 'MLPClassifier':
         # Fitting
@@ -30,6 +31,7 @@ def benchmark(classifier, dataset_name, X_train, X_test, y_train, y_test):
 
         # Get the time
         total_time = time.time() - start_time
+        accuracy = test_score
 
         # Print result to file
         with open(f"results/{classifier.__class__.__name__}/{dataset_name}-{start_time}.txt", 'a') as f:
@@ -44,6 +46,7 @@ def benchmark(classifier, dataset_name, X_train, X_test, y_train, y_test):
             with open(f"results/{classifier.__class__.__name__}/{dataset_name}-{start_time}.txt", 'a') as f:
                 f.write(f'Result for the {classifier.__class__.__name__} on the {dataset_name} dataset with the following specification:\n')
                 f.write('Dataset too big for SVC!')
+                result_df.loc[len(result_df)] = [dataset_name, classifier.__class__.__name__, 0, 0]
                 return
         # Fitting
         classifier.fit(X_train, y_train.values.ravel())
@@ -54,6 +57,7 @@ def benchmark(classifier, dataset_name, X_train, X_test, y_train, y_test):
 
         # Get the time
         total_time = time.time() - start_time
+        accuracy = accuracy_score(y_test, predicted)
 
         # Print result to file
         with open(f"results/{classifier.__class__.__name__}/{dataset_name}-{start_time}.txt", 'a') as f:
@@ -65,6 +69,8 @@ def benchmark(classifier, dataset_name, X_train, X_test, y_train, y_test):
             f.write(str(metrics.confusion_matrix(y_test, predicted)))
             f.write(f'\nExecution time: {total_time}')
 
+    result_df.loc[len(result_df)] = [dataset_name, classifier.__class__.__name__, accuracy, total_time]
+
 
 for dataset in [get_bank, get_bank_full, get_bank_additional, get_bank_additional_full, get_abalone, get_glass, get_tic_tac_toe, get_MNIST]:
     dataset_name, data, target = dataset()
@@ -72,3 +78,6 @@ for dataset in [get_bank, get_bank_full, get_bank_additional, get_bank_additiona
     for classifier in [create_MLP, create_GB, create_RF, create_SVM, create_XGB]:
         print(f'Now running the {classifier.__name__} with the {dataset.__name__} dataset')
         benchmark(classifier(), dataset_name, X_train, X_test, y_train, y_test)
+        print(result_df)
+
+result_df.to_csv('results/all_results.csv')
