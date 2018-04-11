@@ -10,17 +10,6 @@ from sklearn import datasets, metrics
 from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
 from sklearn.neural_network import MLPClassifier
 
-df = pd.read_csv('data/tic-tac-toe/tic-tac-toe.data', header=None)
-
-for column in df:
-    enc = LabelEncoder()
-    enc.fit(df[column])
-    df[column] = enc.transform(df[column])
-
-data = df[df.columns[:9]]
-target = df[df.columns[9:]]
-exit(1)
-
 
 def benchmark(classifier, dataset_name, X_train, X_test, y_train, y_test):
     """Benchmark the classifier"""
@@ -69,7 +58,7 @@ def benchmark(classifier, dataset_name, X_train, X_test, y_train, y_test):
 
 for dataset in [get_MNIST, get_bank, get_bank_full, get_bank_additional, get_bank_additional_full, get_abalone, get_glass, get_tic_tac_toe]:
     dataset_name, data, target = dataset()
-    X_train, X_test, y_train, y_test = train_test_split(data, target, test_size=0.1, stratify=target, random_state=0)
+    X_train, X_test, y_train, y_test = train_test_split(data, target, test_size=0.1, random_state=0)
     for classifier in [create_GB, create_MLP, create_RF, create_SVM]:
         print(f'Now running the {classifier.__name__} with the {dataset.__name__} dataset')
         #benchmark(classifier(), dataset_name, X_train, X_test, y_train, y_test)
