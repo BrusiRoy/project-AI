@@ -4,21 +4,22 @@ import pandas as pd
 
 from sklearn import datasets, svm, metrics
 from sklearn.preprocessing import LabelEncoder
-from utils import get_MNIST, get_bank, get_bank_full, get_bank_additional, get_bank_additional_full
+from utils import get_MNIST, get_bank, get_bank_full, get_bank_additional, get_bank_additional_full, get_abalone, get_glass, get_tic_tac_toe
+from utils import create_GB, create_MLP, create_RF, create_SVM
 from sklearn import datasets, metrics
 from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
 from sklearn.neural_network import MLPClassifier
 
-# MNIST benchmark
-#data, target = get_MNIST()
-#X_train, X_test, y_train, y_test = train_test_split(data / 255., target, train_size=60000, stratify=target, random_state=0)
+df = pd.read_csv('data/tic-tac-toe/tic-tac-toe.data', header=None)
 
+for column in df:
+    enc = LabelEncoder()
+    enc.fit(df[column])
+    df[column] = enc.transform(df[column])
 
-#name, data, target = get_bank_full()
-dataset_name, data, target = get_bank_additional_full()
-
-
-X_train, X_test, y_train, y_test = train_test_split(data, target, test_size=0.1, stratify=target, random_state=0)
+data = df[df.columns[:9]]
+target = df[df.columns[9:]]
+exit(1)
 
 
 def benchmark(classifier, dataset_name, X_train, X_test, y_train, y_test):
@@ -41,6 +42,12 @@ def benchmark(classifier, dataset_name, X_train, X_test, y_train, y_test):
             f.write(f'Test score: {test_score}\n')
             f.write(f'\nExecution time: {total_time}')
     else:
+        if classifier.__class__.__name__ == 'SVC' and len(X_train > 8000):
+            with open(f"results/{classifier.__class__.__name__}/{dataset_name}-{start_time}.txt", 'a') as f:
+                f.write(f'Result for the {classifier.__class__.__name__} on the {dataset_name} dataset with the following specification:\n')
+                f.write('Dataset too big for SVC!')
+                return
+
         start_time = time.time()
         # Fitting
         classifier.fit(X_train, y_train)
@@ -59,20 +66,10 @@ def benchmark(classifier, dataset_name, X_train, X_test, y_train, y_test):
             f.write(str(metrics.confusion_matrix(expected, predicted)))
             f.write(f'\nExecution time: {total_time}')
 
-#rf = RandomForestClassifier(n_estimators=100, oob_score=True, random_state=0)
-#benchmark(rf, 'MNIST', X_train, X_test, y_train, y_test)
-#benchmark(rf, 'Bank', X_train, X_test, y_train, y_test)
 
-#svm = svm.SVC(gamma=0.001)
-#benchmark(svm, 'MNIST', X_train, X_test, y_train, y_test)
-#benchmark(svm, 'Bank', X_train, X_test, y_train, y_test)
-
-#gb = GradientBoostingClassifier(n_estimators=10, learning_rate=1.0, max_depth=1, random_state=0)
-#benchmark(gb, 'MNIST', X_train, X_test, y_train, y_test)
-
-
-mlp = MLPClassifier(hidden_layer_sizes=(50,), max_iter=10, alpha=1e-4,
-                    solver='sgd', verbose=10, tol=1e-4, random_state=1,
-                    learning_rate_init=.1)
-
-benchmark(mlp, dataset_name, X_train, X_test, y_train, y_test)
+for dataset in [get_MNIST, get_bank, get_bank_full, get_bank_additional, get_bank_additional_full, get_abalone, get_glass, get_tic_tac_toe]:
+    dataset_name, data, target = dataset()
+    X_train, X_test, y_train, y_test = train_test_split(data, target, test_size=0.1, stratify=target, random_state=0)
+    for classifier in [create_GB, create_MLP, create_RF, create_SVM]:
+        print(f'Now running the {classifier.__name__} with the {dataset.__name__} dataset')
+        #benchmark(classifier(), dataset_name, X_train, X_test, y_train, y_test)
