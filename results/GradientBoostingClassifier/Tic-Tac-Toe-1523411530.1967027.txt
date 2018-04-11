@@ -1,0 +1,19 @@
+Result for the GradientBoostingClassifier on the Tic-Tac-Toe dataset with the following specification:
+GradientBoostingClassifier(criterion='friedman_mse', init=None,
+              learning_rate=1.0, loss='deviance', max_depth=1,
+              max_features=None, max_leaf_nodes=None,
+              min_impurity_decrease=0.0, min_impurity_split=None,
+              min_samples_leaf=1, min_samples_split=2,
+              min_weight_fraction_leaf=0.0, n_estimators=10,
+              presort='auto', random_state=0, subsample=1.0, verbose=0,
+              warm_start=False)Classification Report:
+             precision    recall  f1-score   support
+
+          0       0.56      0.38      0.45        37
+          1       0.68      0.81      0.74        59
+
+avg / total       0.63      0.65      0.63        96
+Confusion matrix:
+[[14 23]
+ [11 48]]
+Execution time: 0.005503416061401367

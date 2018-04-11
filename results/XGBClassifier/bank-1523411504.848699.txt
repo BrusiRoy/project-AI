@@ -1,0 +1,17 @@
+Result for the XGBClassifier on the bank dataset with the following specification:
+XGBClassifier(base_score=0.5, booster='gbtree', colsample_bylevel=1,
+       colsample_bytree=1, gamma=0, learning_rate=0.1, max_delta_step=0,
+       max_depth=3, min_child_weight=1, missing=None, n_estimators=100,
+       n_jobs=1, nthread=None, objective='binary:logistic', random_state=0,
+       reg_alpha=0, reg_lambda=1, scale_pos_weight=1, seed=None,
+       silent=True, subsample=1)Classification Report:
+             precision    recall  f1-score   support
+
+          0       0.92      0.97      0.94       402
+          1       0.57      0.33      0.42        51
+
+avg / total       0.88      0.90      0.88       453
+Confusion matrix:
+[[389  13]
+ [ 34  17]]
+Execution time: 0.26067566871643066

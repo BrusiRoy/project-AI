@@ -1,0 +1,2 @@
+Result for the SVC on the bank dataset with the following specification:
+Dataset too big for SVC!

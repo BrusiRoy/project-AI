@@ -1,0 +1,2 @@
+Result for the SVC on the Tic-Tac-Toe dataset with the following specification:
+Dataset too big for SVC!

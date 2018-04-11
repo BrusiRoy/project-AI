@@ -1,0 +1,17 @@
+Result for the RandomForestClassifier on the Tic-Tac-Toe dataset with the following specification:
+RandomForestClassifier(bootstrap=True, class_weight=None, criterion='gini',
+            max_depth=None, max_features='auto', max_leaf_nodes=None,
+            min_impurity_decrease=0.0, min_impurity_split=None,
+            min_samples_leaf=1, min_samples_split=2,
+            min_weight_fraction_leaf=0.0, n_estimators=100, n_jobs=1,
+            oob_score=True, random_state=0, verbose=0, warm_start=False)Classification Report:
+             precision    recall  f1-score   support
+
+          0       1.00      0.81      0.90        37
+          1       0.89      1.00      0.94        59
+
+avg / total       0.93      0.93      0.93        96
+Confusion matrix:
+[[30  7]
+ [ 0 59]]
+Execution time: 0.16761136054992676

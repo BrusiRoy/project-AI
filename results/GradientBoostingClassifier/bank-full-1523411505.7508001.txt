@@ -1,0 +1,19 @@
+Result for the GradientBoostingClassifier on the bank-full dataset with the following specification:
+GradientBoostingClassifier(criterion='friedman_mse', init=None,
+              learning_rate=1.0, loss='deviance', max_depth=1,
+              max_features=None, max_leaf_nodes=None,
+              min_impurity_decrease=0.0, min_impurity_split=None,
+              min_samples_leaf=1, min_samples_split=2,
+              min_weight_fraction_leaf=0.0, n_estimators=10,
+              presort='auto', random_state=0, subsample=1.0, verbose=0,
+              warm_start=False)Classification Report:
+             precision    recall  f1-score   support
+
+          0       0.92      0.96      0.94      4000
+          1       0.52      0.33      0.41       522
+
+avg / total       0.87      0.89      0.88      4522
+Confusion matrix:
+[[3843  157]
+ [ 349  173]]
+Execution time: 0.14159417152404785
