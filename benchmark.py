@@ -39,7 +39,7 @@ def benchmark(classifier, dataset_name, X_train, X_test, y_train, y_test):
             f.write(f'Test score: {test_score}\n')
             f.write(f'\nExecution time: {total_time}')
     else:
-        if classifier.__class__.__name__ == 'SVC' and len(X_train > 8000):
+        if classifier.__class__.__name__ == 'SVC' and len(X_train) > 8000:
             # If the classifier is a SVM and the dataset is larger than 8000, stop early...
             with open(f"results/{classifier.__class__.__name__}/{dataset_name}-{start_time}.txt", 'a') as f:
                 f.write(f'Result for the {classifier.__class__.__name__} on the {dataset_name} dataset with the following specification:\n')

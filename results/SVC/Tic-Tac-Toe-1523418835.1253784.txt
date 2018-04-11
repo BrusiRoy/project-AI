@@ -1,0 +1,15 @@
+Result for the SVC on the Tic-Tac-Toe dataset with the following specification:
+SVC(C=1.0, cache_size=200, class_weight=None, coef0=0.0,
+  decision_function_shape='ovr', degree=3, gamma=0.001, kernel='rbf',
+  max_iter=-1, probability=False, random_state=None, shrinking=True,
+  tol=0.001, verbose=False)Classification Report:
+             precision    recall  f1-score   support
+
+          0       0.00      0.00      0.00        37
+          1       0.61      1.00      0.76        59
+
+avg / total       0.38      0.61      0.47        96
+Confusion matrix:
+[[ 0 37]
+ [ 0 59]]
+Execution time: 0.023522377014160156
