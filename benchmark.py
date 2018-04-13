@@ -6,12 +6,13 @@ from sklearn import datasets, svm, metrics
 from sklearn.preprocessing import LabelEncoder
 from utils import get_MNIST, get_bank, get_bank_full, get_bank_additional, get_bank_additional_full, get_abalone, get_glass, get_tic_tac_toe
 from utils import create_GB, create_MLP, create_RF, create_SVM, create_XGB
+from utils import create_optimized_GB, create_optimized_MLP, create_optimized_RF, create_optimized_SVM, create_optimized_SVM, create_optimized_XGB
 from sklearn import datasets, metrics
 from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
 from sklearn.neural_network import MLPClassifier
 from sklearn.metrics import accuracy_score
 
-result_df = pd.DataFrame(columns=['dataset', 'algo', 'accuracy', 'time'])
+#result_df = pd.DataFrame(columns=['dataset', 'algo', 'accuracy', 'time'])
 
 
 def benchmark(classifier, dataset_name, X_train, X_test, y_train, y_test):
@@ -72,6 +73,17 @@ def benchmark(classifier, dataset_name, X_train, X_test, y_train, y_test):
     result_df.loc[len(result_df)] = [dataset_name, classifier.__class__.__name__, accuracy, total_time]
 
 
+def print_fitted_model(classifier, dataset_name, X_test, y_test):
+    global optimized_result_df
+
+    start_time = time.time()
+    predicted = [round(value) for value in classifier.predict(X_test)]
+    total_time = time.time() - start_time
+    accuracy = accuracy_score(y_test, predicted)
+    optimized_result_df.loc[len(optimized_result_df)] = [dataset_name, classifier.__class__.__name__, accuracy, total_time]
+
+
+"""
 for dataset in [get_bank, get_bank_full, get_bank_additional, get_bank_additional_full, get_abalone, get_glass, get_tic_tac_toe, get_MNIST]:
     dataset_name, data, target = dataset()
     X_train, X_test, y_train, y_test = train_test_split(data, target, test_size=0.1, random_state=0)
@@ -81,3 +93,20 @@ for dataset in [get_bank, get_bank_full, get_bank_additional, get_bank_additiona
         print(result_df)
 
 result_df.to_csv('results/all_results.csv')
+"""
+if __name__ == '__main__':
+    optimized_result_df = pd.DataFrame(columns=['dataset', 'algo', 'accuracy', 'time'])
+    for dataset in [get_bank]:
+        dataset_name, data, target = dataset()
+        X_train, X_test, y_train, y_test = train_test_split(data, target, test_size=0.1, random_state=0)
+        for classifier in [create_optimized_GB, create_optimized_MLP, create_optimized_RF, create_optimized_SVM, create_optimized_XGB]:
+            print(f'Now running the {classifier.__name__} with the {dataset.__name__} dataset')
+            trained_classifier = classifier(X_train, y_train)
+            print_fitted_model(trained_classifier, dataset_name, X_test, y_test)
+            print(optimized_result_df)
+            with open(f"results/best_models_params.txt", 'a') as f:
+                f.write(f'Here are the classifier specs:\n')
+                f.write(str(trained_classifier) + '\n')
+
+    with open('results/all_optimized_results.csv', 'a') as f:
+        optimized_result_df.to_csv(f)
