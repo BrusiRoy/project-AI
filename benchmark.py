@@ -96,7 +96,7 @@ result_df.to_csv('results/all_results.csv')
 """
 if __name__ == '__main__':
     optimized_result_df = pd.DataFrame(columns=['dataset', 'algo', 'accuracy', 'time'])
-    for dataset in [get_bank]:
+    for dataset in [get_bank_additional_full]:
         dataset_name, data, target = dataset()
         X_train, X_test, y_train, y_test = train_test_split(data, target, test_size=0.1, random_state=0)
         for classifier in [create_optimized_GB, create_optimized_MLP, create_optimized_RF, create_optimized_SVM, create_optimized_XGB]:
@@ -107,6 +107,8 @@ if __name__ == '__main__':
             with open(f"results/best_models_params.txt", 'a') as f:
                 f.write(f'Here are the classifier specs:\n')
                 f.write(str(trained_classifier) + '\n')
+            with open('results/all_optimized_results.csv', 'a') as f:
+                optimized_result_df.to_csv(f)
 
     with open('results/all_optimized_results.csv', 'a') as f:
         optimized_result_df.to_csv(f)

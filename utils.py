@@ -161,14 +161,13 @@ def create_optimized_GB(X_train, y_train):
     """Returns an optimized Gradient boosting"""
     param_grid = {
         'loss': ['deviance'],
-        'learning_rate': [0.01, 0.05, 0.1, 0.2, 1],
+        'learning_rate': [0.05, 0.1, 1],
         'min_samples_leaf': [2, 3, 4, 5],
         'min_samples_split': [4, 6, 8, 10],
         'max_depth': [3, 5, 8],
         'max_features': ['log2', 'sqrt'],
-        'min_impurity_split': [5e-6, 1e-7, 5e-7],
         'criterion': ['friedman_mse',  'mae'],
-        'subsample': [0.5, 0.8, 1.0],
+        'subsample': [0.5, 1.0],
         'n_estimators': [10, 100, 200]
     }
 
