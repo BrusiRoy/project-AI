@@ -1,0 +1,11 @@
+Here are the classifier specs:
+XGBClassifier(base_score=0.5, booster='gbtree', colsample_bylevel=1,
+       colsample_bytree=0.6, gamma=0.5, learning_rate=0.05,
+       max_delta_step=0, max_depth=3, min_child_weight=1, missing=None,
+       n_estimators=100, n_jobs=1, nthread=None,
+       objective='multi:softprob', random_state=0, reg_alpha=0,
+       reg_lambda=1, scale_pos_weight=1, seed=None, silent=True,
+       subsample=0.6)
+
+,dataset,algo,accuracy,time
+0,Glass,XGBClassifier,0.9545454545454546,0.002001523971557617

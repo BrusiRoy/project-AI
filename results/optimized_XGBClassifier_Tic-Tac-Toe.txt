@@ -1,0 +1,11 @@
+Here are the classifier specs:
+XGBClassifier(base_score=0.5, booster='gbtree', colsample_bylevel=1,
+       colsample_bytree=0.6, gamma=0.5, learning_rate=0.2,
+       max_delta_step=0, max_depth=5, min_child_weight=1, missing=None,
+       n_estimators=200, n_jobs=1, nthread=None,
+       objective='binary:logistic', random_state=0, reg_alpha=0,
+       reg_lambda=1, scale_pos_weight=1, seed=None, silent=True,
+       subsample=1.0)
+
+,dataset,algo,accuracy,time
+0,Tic-Tac-Toe,XGBClassifier,1.0,0.002501249313354492

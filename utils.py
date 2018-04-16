@@ -162,11 +162,9 @@ def create_optimized_GB(X_train, y_train):
     param_grid = {
         'loss': ['deviance'],
         'learning_rate': [0.05, 0.1, 1],
-        'min_samples_leaf': [2, 3, 4, 5],
+        'min_samples_leaf': [2, 4, 5],
         'min_samples_split': [4, 6, 8, 10],
         'max_depth': [3, 5, 8],
-        'max_features': ['log2', 'sqrt'],
-        'criterion': ['friedman_mse',  'mae'],
         'subsample': [0.5, 1.0],
         'n_estimators': [10, 100, 200]
     }
@@ -227,3 +225,50 @@ def create_optimized_XGB(X_train, y_train):
     grid_search = GridSearchCV(estimator=classifier, param_grid=param_grid, cv=3, n_jobs=-1, verbose=2)
     grid_search.fit(X_train, y_train.values.ravel())
     return grid_search.best_estimator_
+
+
+def create_bank_tuned_GB(X_train, y_train):
+    return GradientBoostingClassifier(criterion='friedman_mse', init=None,
+        learning_rate=0.1, loss='deviance', max_depth=8,
+        max_features='sqrt', max_leaf_nodes=None,
+        min_impurity_decrease=0.0, min_impurity_split=None,
+        min_samples_leaf=2, min_samples_split=6,
+        min_weight_fraction_leaf=0.0, n_estimators=100,
+        presort='auto', random_state=None, subsample=1.0, verbose=0,
+        warm_start=False).fit(X_train, y_train.values.ravel())
+
+
+def create_bank_tuned_MLP(X_train, y_train):
+    return MLPClassifier(activation='relu', alpha=0.0001, batch_size='auto', beta_1=0.9,
+        beta_2=0.999, early_stopping=False, epsilon=1e-07,
+        hidden_layer_sizes=(128,), learning_rate='constant',
+        learning_rate_init=0.1, max_iter=200, momentum=0.9,
+        nesterovs_momentum=True, power_t=0.5, random_state=None,
+        shuffle=True, solver='adam', tol=0.01, validation_fraction=0.1,
+        verbose=False, warm_start=False).fit(X_train, y_train.values.ravel())
+
+
+def create_bank_tuned_RF(X_train, y_train):
+    return RandomForestClassifier(bootstrap=True, class_weight=None, criterion='gini',
+        max_depth=80, max_features=4, max_leaf_nodes=None,
+        min_impurity_decrease=0.0, min_impurity_split=None,
+        min_samples_leaf=2, min_samples_split=6,
+        min_weight_fraction_leaf=0.0, n_estimators=100, n_jobs=1,
+        oob_score=False, random_state=None, verbose=0,
+        warm_start=False).fit(X_train, y_train.values.ravel())
+
+
+def create_bank_tuned_SVM(X_train, y_train):
+    return svm.SVC(C=1, cache_size=200, class_weight=None, coef0=0.0,
+        decision_function_shape='ovr', degree=3, gamma=0.001, kernel='rbf',
+        max_iter=-1, probability=False, random_state=None, shrinking=True,
+        tol=0.001, verbose=False).fit(X_train, y_train.values.ravel())
+
+
+def create_bank_tuned_XGB(X_train, y_train):
+    return XGBClassifier(base_score=0.5, booster='gbtree', colsample_bylevel=1,
+        colsample_bytree=1.0, gamma=5, learning_rate=0.05, max_delta_step=0,
+        max_depth=8, min_child_weight=1, missing=None, n_estimators=200,
+        n_jobs=1, nthread=None, objective='binary:logistic', random_state=0,
+        reg_alpha=0, reg_lambda=1, scale_pos_weight=1, seed=None,
+        silent=True, subsample=0.6).fit(X_train, y_train.values.ravel())
